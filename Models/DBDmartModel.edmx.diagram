@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="766a48faafcb47f19a3c03ae380b134e" Name="Diagram1">
+        <EntityTypeShape EntityType="DBDMartModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_admin" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_categories" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_product" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_user" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_categ__ad_id__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_produ__cat_i__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_produ__pro_u__49C3F6B7" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_cart" Width="1.5" PointX="8.5" PointY="3.25" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_invoice" Width="1.5" PointX="5.25" PointY="8.375" />
+        <EntityTypeShape EntityType="DBDMartModel.tbl_invoiceDetail" Width="1.5" PointX="8.5" PointY="6.5" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_cart__c_fk_p__68487DD7" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_cart__c_fk_u__6754599E" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_invoi__inv_f__6B24EA82" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_invoi__inv_f__6EF57B66" />
+        <AssociationConnector Association="DBDMartModel.FK__tbl_invoi__o_fk___6E01572D" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

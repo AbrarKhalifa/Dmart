@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBDMartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad_username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ad_password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ad_image" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_cart">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_qty" Type="int" />
+          <Property Name="c_price" Type="int" />
+          <Property Name="c_fk_user_id" Type="int" />
+          <Property Name="c_fk_pro_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_categories">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat_name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="cat_image" Type="varchar(max)" Nullable="false" />
+          <Property Name="cat_status" Type="int" Nullable="false" />
+          <Property Name="ad_id_fk" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_invoice">
+          <Key>
+            <PropertyRef Name="inv_id" />
+          </Key>
+          <Property Name="inv_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inv_fk_user_id" Type="int" />
+          <Property Name="total_bill" Type="int" />
+          <Property Name="invoice_date" Type="date" />
+          <Property Name="payment_method" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="tbl_invoiceDetail">
+          <Key>
+            <PropertyRef Name="o_id" />
+          </Key>
+          <Property Name="o_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="o_fk_pro_id" Type="int" />
+          <Property Name="total_bill" Type="int" />
+          <Property Name="order_date" Type="date" />
+          <Property Name="qty" Type="int" />
+          <Property Name="price" Type="int" />
+          <Property Name="inv_fk_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_product">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pro_name" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="pro_description" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="pro_price" Type="int" />
+          <Property Name="pro_image" Type="varchar(max)" Nullable="false" />
+          <Property Name="pro_user_id_fk" Type="int" />
+          <Property Name="cat_id_fk" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="u_username" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="u_password" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="u_email" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="u_contact" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="u_image" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tbl_cart__c_fk_p__68487DD7">
+          <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="0..1" />
+          <End Role="tbl_cart" Type="Self.tbl_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tbl_cart">
+              <PropertyRef Name="c_fk_pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_cart__c_fk_u__6754599E">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_cart" Type="Self.tbl_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_cart">
+              <PropertyRef Name="c_fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_categ__ad_id__3B75D760">
+          <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
+          <End Role="tbl_categories" Type="Self.tbl_categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_admin">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="tbl_categories">
+              <PropertyRef Name="ad_id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_invoi__inv_f__6B24EA82">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_invoice" Type="Self.tbl_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_invoice">
+              <PropertyRef Name="inv_fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_invoi__inv_f__6EF57B66">
+          <End Role="tbl_invoice" Type="Self.tbl_invoice" Multiplicity="0..1" />
+          <End Role="tbl_invoiceDetail" Type="Self.tbl_invoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_invoice">
+              <PropertyRef Name="inv_id" />
+            </Principal>
+            <Dependent Role="tbl_invoiceDetail">
+              <PropertyRef Name="inv_fk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_invoi__o_fk___6E01572D">
+          <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="0..1" />
+          <End Role="tbl_invoiceDetail" Type="Self.tbl_invoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tbl_invoiceDetail">
+              <PropertyRef Name="o_fk_pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__cat_i__4AB81AF0">
+          <End Role="tbl_categories" Type="Self.tbl_categories" Multiplicity="0..1" />
+          <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_categories">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="tbl_product">
+              <PropertyRef Name="cat_id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__pro_u__49C3F6B7">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_product">
+              <PropertyRef Name="pro_user_id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBDMartModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_cart" EntityType="Self.tbl_cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_categories" EntityType="Self.tbl_categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_invoice" EntityType="Self.tbl_invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_invoiceDetail" EntityType="Self.tbl_invoiceDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_product" EntityType="Self.tbl_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tbl_cart__c_fk_p__68487DD7" Association="Self.FK__tbl_cart__c_fk_p__68487DD7">
+            <End Role="tbl_product" EntitySet="tbl_product" />
+            <End Role="tbl_cart" EntitySet="tbl_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_cart__c_fk_u__6754599E" Association="Self.FK__tbl_cart__c_fk_u__6754599E">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_cart" EntitySet="tbl_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_categ__ad_id__3B75D760" Association="Self.FK__tbl_categ__ad_id__3B75D760">
+            <End Role="tbl_admin" EntitySet="tbl_admin" />
+            <End Role="tbl_categories" EntitySet="tbl_categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_invoi__inv_f__6B24EA82" Association="Self.FK__tbl_invoi__inv_f__6B24EA82">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_invoi__inv_f__6EF57B66" Association="Self.FK__tbl_invoi__inv_f__6EF57B66">
+            <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+            <End Role="tbl_invoiceDetail" EntitySet="tbl_invoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_invoi__o_fk___6E01572D" Association="Self.FK__tbl_invoi__o_fk___6E01572D">
+            <End Role="tbl_product" EntitySet="tbl_product" />
+            <End Role="tbl_invoiceDetail" EntitySet="tbl_invoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__cat_i__4AB81AF0" Association="Self.FK__tbl_produ__cat_i__4AB81AF0">
+            <End Role="tbl_categories" EntitySet="tbl_categories" />
+            <End Role="tbl_product" EntitySet="tbl_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__pro_u__49C3F6B7" Association="Self.FK__tbl_produ__pro_u__49C3F6B7">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_product" EntitySet="tbl_product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBDMartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad_username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ad_password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ad_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_categories" Relationship="Self.FK__tbl_categ__ad_id__3B75D760" FromRole="tbl_admin" ToRole="tbl_categories" />
+        </EntityType>
+        <EntityType Name="tbl_categories">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat_status" Type="Int32" Nullable="false" />
+          <Property Name="ad_id_fk" Type="Int32" />
+          <NavigationProperty Name="tbl_admin" Relationship="Self.FK__tbl_categ__ad_id__3B75D760" FromRole="tbl_categories" ToRole="tbl_admin" />
+          <NavigationProperty Name="tbl_product" Relationship="Self.FK__tbl_produ__cat_i__4AB81AF0" FromRole="tbl_categories" ToRole="tbl_product" />
+        </EntityType>
+        <EntityType Name="tbl_product">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pro_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_description" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_price" Type="Int32" />
+          <Property Name="pro_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_user_id_fk" Type="Int32" />
+          <Property Name="cat_id_fk" Type="Int32" />
+          <NavigationProperty Name="tbl_categories" Relationship="Self.FK__tbl_produ__cat_i__4AB81AF0" FromRole="tbl_product" ToRole="tbl_categories" />
+          <NavigationProperty Name="tbl_user" Relationship="Self.FK__tbl_produ__pro_u__49C3F6B7" FromRole="tbl_product" ToRole="tbl_user" />
+          <NavigationProperty Name="tbl_cart" Relationship="DBDMartModel.FK__tbl_cart__c_fk_p__68487DD7" FromRole="tbl_product" ToRole="tbl_cart" />
+          <NavigationProperty Name="tbl_invoiceDetail" Relationship="DBDMartModel.FK__tbl_invoi__o_fk___6E01572D" FromRole="tbl_product" ToRole="tbl_invoiceDetail" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="u_id" />
+          </Key>
+          <Property Name="u_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="u_username" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_contact" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_product" Relationship="Self.FK__tbl_produ__pro_u__49C3F6B7" FromRole="tbl_user" ToRole="tbl_product" />
+          <NavigationProperty Name="tbl_cart" Relationship="DBDMartModel.FK__tbl_cart__c_fk_u__6754599E" FromRole="tbl_user" ToRole="tbl_cart" />
+          <NavigationProperty Name="tbl_invoice" Relationship="DBDMartModel.FK__tbl_invoi__inv_f__6B24EA82" FromRole="tbl_user" ToRole="tbl_invoice" />
+        </EntityType>
+        <Association Name="FK__tbl_categ__ad_id__3B75D760">
+          <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
+          <End Role="tbl_categories" Type="Self.tbl_categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_admin">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="tbl_categories">
+              <PropertyRef Name="ad_id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__cat_i__4AB81AF0">
+          <End Role="tbl_categories" Type="Self.tbl_categories" Multiplicity="0..1" />
+          <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_categories">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="tbl_product">
+              <PropertyRef Name="cat_id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__pro_u__49C3F6B7">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_product">
+              <PropertyRef Name="pro_user_id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBDMartEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" />
+          <EntitySet Name="tbl_categories" EntityType="Self.tbl_categories" />
+          <EntitySet Name="tbl_product" EntityType="Self.tbl_product" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+          <AssociationSet Name="FK__tbl_categ__ad_id__3B75D760" Association="Self.FK__tbl_categ__ad_id__3B75D760">
+            <End Role="tbl_admin" EntitySet="tbl_admin" />
+            <End Role="tbl_categories" EntitySet="tbl_categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__cat_i__4AB81AF0" Association="Self.FK__tbl_produ__cat_i__4AB81AF0">
+            <End Role="tbl_categories" EntitySet="tbl_categories" />
+            <End Role="tbl_product" EntitySet="tbl_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__pro_u__49C3F6B7" Association="Self.FK__tbl_produ__pro_u__49C3F6B7">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_product" EntitySet="tbl_product" />
+          </AssociationSet>
+          <EntitySet Name="tbl_cart" EntityType="DBDMartModel.tbl_cart" />
+          <EntitySet Name="tbl_invoice" EntityType="DBDMartModel.tbl_invoice" />
+          <EntitySet Name="tbl_invoiceDetail" EntityType="DBDMartModel.tbl_invoiceDetail" />
+          <AssociationSet Name="FK__tbl_cart__c_fk_p__68487DD7" Association="DBDMartModel.FK__tbl_cart__c_fk_p__68487DD7">
+            <End Role="tbl_product" EntitySet="tbl_product" />
+            <End Role="tbl_cart" EntitySet="tbl_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_cart__c_fk_u__6754599E" Association="DBDMartModel.FK__tbl_cart__c_fk_u__6754599E">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_cart" EntitySet="tbl_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_invoi__inv_f__6B24EA82" Association="DBDMartModel.FK__tbl_invoi__inv_f__6B24EA82">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_invoi__inv_f__6EF57B66" Association="DBDMartModel.FK__tbl_invoi__inv_f__6EF57B66">
+            <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+            <End Role="tbl_invoiceDetail" EntitySet="tbl_invoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_invoi__o_fk___6E01572D" Association="DBDMartModel.FK__tbl_invoi__o_fk___6E01572D">
+            <End Role="tbl_product" EntitySet="tbl_product" />
+            <End Role="tbl_invoiceDetail" EntitySet="tbl_invoiceDetail" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="tbl_cart">
+          <Key>
+            <PropertyRef Name="c_id" />
+          </Key>
+          <Property Name="c_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_qty" Type="Int32" />
+          <Property Name="c_price" Type="Int32" />
+          <Property Name="c_fk_user_id" Type="Int32" />
+          <Property Name="c_fk_pro_id" Type="Int32" />
+          <NavigationProperty Name="tbl_product" Relationship="DBDMartModel.FK__tbl_cart__c_fk_p__68487DD7" FromRole="tbl_cart" ToRole="tbl_product" />
+          <NavigationProperty Name="tbl_user" Relationship="DBDMartModel.FK__tbl_cart__c_fk_u__6754599E" FromRole="tbl_cart" ToRole="tbl_user" />
+        </EntityType>
+        <EntityType Name="tbl_invoice">
+          <Key>
+            <PropertyRef Name="inv_id" />
+          </Key>
+          <Property Name="inv_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inv_fk_user_id" Type="Int32" />
+          <Property Name="total_bill" Type="Int32" />
+          <Property Name="invoice_date" Type="DateTime" Precision="0" />
+          <Property Name="payment_method" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_user" Relationship="DBDMartModel.FK__tbl_invoi__inv_f__6B24EA82" FromRole="tbl_invoice" ToRole="tbl_user" />
+          <NavigationProperty Name="tbl_invoiceDetail" Relationship="DBDMartModel.FK__tbl_invoi__inv_f__6EF57B66" FromRole="tbl_invoice" ToRole="tbl_invoiceDetail" />
+        </EntityType>
+        <EntityType Name="tbl_invoiceDetail">
+          <Key>
+            <PropertyRef Name="o_id" />
+          </Key>
+          <Property Name="o_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="o_fk_pro_id" Type="Int32" />
+          <Property Name="total_bill" Type="Int32" />
+          <Property Name="order_date" Type="DateTime" Precision="0" />
+          <Property Name="qty" Type="Int32" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="inv_fk_id" Type="Int32" />
+          <NavigationProperty Name="tbl_invoice" Relationship="DBDMartModel.FK__tbl_invoi__inv_f__6EF57B66" FromRole="tbl_invoiceDetail" ToRole="tbl_invoice" />
+          <NavigationProperty Name="tbl_product" Relationship="DBDMartModel.FK__tbl_invoi__o_fk___6E01572D" FromRole="tbl_invoiceDetail" ToRole="tbl_product" />
+        </EntityType>
+        <Association Name="FK__tbl_cart__c_fk_p__68487DD7">
+          <End Type="DBDMartModel.tbl_product" Role="tbl_product" Multiplicity="0..1" />
+          <End Type="DBDMartModel.tbl_cart" Role="tbl_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tbl_cart">
+              <PropertyRef Name="c_fk_pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_cart__c_fk_u__6754599E">
+          <End Type="DBDMartModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
+          <End Type="DBDMartModel.tbl_cart" Role="tbl_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_cart">
+              <PropertyRef Name="c_fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_invoi__inv_f__6B24EA82">
+          <End Type="DBDMartModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
+          <End Type="DBDMartModel.tbl_invoice" Role="tbl_invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="u_id" />
+            </Principal>
+            <Dependent Role="tbl_invoice">
+              <PropertyRef Name="inv_fk_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_invoi__inv_f__6EF57B66">
+          <End Type="DBDMartModel.tbl_invoice" Role="tbl_invoice" Multiplicity="0..1" />
+          <End Type="DBDMartModel.tbl_invoiceDetail" Role="tbl_invoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_invoice">
+              <PropertyRef Name="inv_id" />
+            </Principal>
+            <Dependent Role="tbl_invoiceDetail">
+              <PropertyRef Name="inv_fk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_invoi__o_fk___6E01572D">
+          <End Type="DBDMartModel.tbl_product" Role="tbl_product" Multiplicity="0..1" />
+          <End Type="DBDMartModel.tbl_invoiceDetail" Role="tbl_invoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tbl_invoiceDetail">
+              <PropertyRef Name="o_fk_pro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBDMartModelStoreContainer" CdmEntityContainer="DBDMartEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DBDMartModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_admin">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_admin">
+              <MappingFragment StoreEntitySet="tbl_admin">
+                <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+                <ScalarProperty Name="ad_username" ColumnName="ad_username" />
+                <ScalarProperty Name="ad_password" ColumnName="ad_password" />
+                <ScalarProperty Name="ad_image" ColumnName="ad_image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_categories">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_categories">
+              <MappingFragment StoreEntitySet="tbl_categories">
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+                <ScalarProperty Name="cat_image" ColumnName="cat_image" />
+                <ScalarProperty Name="cat_status" ColumnName="cat_status" />
+                <ScalarProperty Name="ad_id_fk" ColumnName="ad_id_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_product">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_product">
+              <MappingFragment StoreEntitySet="tbl_product">
+                <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+                <ScalarProperty Name="pro_name" ColumnName="pro_name" />
+                <ScalarProperty Name="pro_description" ColumnName="pro_description" />
+                <ScalarProperty Name="pro_price" ColumnName="pro_price" />
+                <ScalarProperty Name="pro_image" ColumnName="pro_image" />
+                <ScalarProperty Name="pro_user_id_fk" ColumnName="pro_user_id_fk" />
+                <ScalarProperty Name="cat_id_fk" ColumnName="cat_id_fk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="u_id" ColumnName="u_id" />
+                <ScalarProperty Name="u_username" ColumnName="u_username" />
+                <ScalarProperty Name="u_password" ColumnName="u_password" />
+                <ScalarProperty Name="u_email" ColumnName="u_email" />
+                <ScalarProperty Name="u_contact" ColumnName="u_contact" />
+                <ScalarProperty Name="u_image" ColumnName="u_image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_cart">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_cart">
+              <MappingFragment StoreEntitySet="tbl_cart">
+                <ScalarProperty Name="c_fk_pro_id" ColumnName="c_fk_pro_id" />
+                <ScalarProperty Name="c_fk_user_id" ColumnName="c_fk_user_id" />
+                <ScalarProperty Name="c_price" ColumnName="c_price" />
+                <ScalarProperty Name="c_qty" ColumnName="c_qty" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_invoice">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_invoice">
+              <MappingFragment StoreEntitySet="tbl_invoice">
+                <ScalarProperty Name="payment_method" ColumnName="payment_method" />
+                <ScalarProperty Name="invoice_date" ColumnName="invoice_date" />
+                <ScalarProperty Name="total_bill" ColumnName="total_bill" />
+                <ScalarProperty Name="inv_fk_user_id" ColumnName="inv_fk_user_id" />
+                <ScalarProperty Name="inv_id" ColumnName="inv_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_invoiceDetail">
+            <EntityTypeMapping TypeName="DBDMartModel.tbl_invoiceDetail">
+              <MappingFragment StoreEntitySet="tbl_invoiceDetail">
+                <ScalarProperty Name="inv_fk_id" ColumnName="inv_fk_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="total_bill" ColumnName="total_bill" />
+                <ScalarProperty Name="o_fk_pro_id" ColumnName="o_fk_pro_id" />
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

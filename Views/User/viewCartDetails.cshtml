@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Dmart.Models.cartDisplay>
+@{
+    ViewBag.Title = "viewCartDetails";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+<div class="report-container">
+
+    <table class="table ">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Product Id</th>
+                <th scope="col">Image</th>
+                <th scope="col">Product Name </th>
+                <th scope="col">Price</th>
+                <th scope="col">Quentity</th>
+                <th scope="col">Total Bill</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody class="table-light">
+            @{
+                int count = 0;
+            }
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td>@item.pro_id</td>
+                    <td><img src="@Url.Content(item.pro_image)" width="100px" height="70px" /></td>
+                    <td>@item.pro_name</td>
+                    <td>@item.pro_price</td>
+                    <td>@item.c_qty</td>
+                    <td>@item.total</td>
+                    <td><a href="@Url.Action("removeCart", "User", new { id = item.pro_id })"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                </tr>
+            }
+
+
+        </tbody>
+        <tfoot class="table-dark">
+
+            <tr>
+                <td colspan="5" class="text-center"> Total items @count</td>
+                <td>
+                    @ViewBag.totalall
+                </td>
+
+
+                <td width="20">
+                    @using (Html.BeginForm("checkout", "Checkout", FormMethod.Post))
+                    {
+                        <input type="submit" class="btn btn-danger btn-sm" value="Checkout" />
+
+                    }
+
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+
+
+</div>
+

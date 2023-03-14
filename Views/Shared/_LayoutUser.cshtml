@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/css/navbar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body {
+            background-image: url('../../Content/images/bg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+    </style>
+
+</head>
+<body class="container-fluid ">
+    <div>
+        <nav class="navbar navbar-expand-lg text-bg-dark bg-light" style="border:2px solid black; border-radius:45px">
+            <div class="container-fluid pe-lg-2 p-0">
+                <a class="navbar-brand fw-bold fs-3" href="#">&nbsp;&nbsp;&nbsp;&nbsp; DMart</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                        @if (Session["u_id"] != null)
+                        {
+
+                        <li class="nav-item active nav-link ">
+                            @Html.ActionLink("All Category", "AllCategory", "User", new {@class="navbar-brand"})
+                        </li>
+                        <li class="nav-item nav-link">
+                            @Html.ActionLink("Add Product", "addProduct", "User", new { @class = "navbar-brand" })
+
+                        </li>
+                            }
+                            else{
+                        <li class="nav-item active nav-link ">
+                            @Html.ActionLink("Login", "Login", "User", new { @class = "navbar-brand" })
+
+                        </li>
+                        <li class="nav-item nav-link">
+                            @Html.ActionLink("Register", "Register", "User", new { @class = "navbar-brand" })
+
+                        </li>
+                        }
+                    </ul>
+                        @if (Session["u_id"] != null)
+                        {
+
+                    <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0 text-dark">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-bold text-danger" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                ~ Hello, @Session["u_username"].ToString()
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li class="nav-item nav-link">
+                                    @Html.ActionLink("Profile", "profile", "User", new { @class = "navbar-brand dropdown-item fs-6" })
+
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item nav-link">
+                                    @Html.ActionLink("Order", "order", "User", new { @class = "navbar-brand dropdown-item fs-6" })
+
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item nav-link">
+                                    @Html.ActionLink("Signout", "signout", "User", new { @class = "navbar-brand dropdown-item fs-6" })
+
+                                </li>
+                            </ul>
+
+                        </li>
+
+                        <li class="nav-item nav-link">
+                            
+                            @Html.Partial("_LayoutCart")
+                            <h6 class=" ">  &nbsp;&nbsp;&nbsp;&nbsp;</h6>
+
+                        </li>
+                        <div class="message">
+
+                            <div class="dp">
+                                <img src="@Url.Content(Session["u_image"].ToString())"
+                                     class="dpicn rounded-circle" style="border:1px solid black" width="40px" height="40px"
+                                     alt="dp">
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+
+                        </div>
+
+
+                    </ul>
+
+                        }
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

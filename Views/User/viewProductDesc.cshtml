@@ -1,0 +1,47 @@
+﻿@model Dmart.Models.tbl_product
+@{
+    ViewBag.Title = "viewProductDesc";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+
+<link href="~/Content/css/viewProductDesCss.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="card">
+    <div class="container-fliud">
+        <div class="wrapper row">
+            <div class="preview col-md-6">
+
+                <div class="preview-pic tab-content">
+                    <div class="tab-pane active" id="pic-1"><img src="@Url.Content(Model.pro_image)" style="width:400px;height:300px" /></div>
+
+                </div>
+
+
+            </div>
+            <div class="details col-md-6">
+                <h3 class="product-title">@Model.pro_name</h3>
+
+                <p class="product-description">@Model.pro_description.</p>
+                <h4 class="price">current price: <span>@Model.pro_price RS</span></h4>
+
+                <h5 class="colors">
+                    colors:
+                    <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                    <span class="color green"></span>
+                    <span class="color blue"></span>
+                </h5>
+                <div class="action">
+
+                    @using (Html.BeginForm("addToCart", "User"))
+                    {
+                        @Html.ActionLink("add item", "addToCart", new { id = Model.pro_id }, new { @class = "add-to-cart btn btn-default" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

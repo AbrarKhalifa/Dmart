@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Dmart.Models.tbl_user>
+@{
+    ViewBag.Title = "ViewAllUsers";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="report-container">
+    <div class="report-header">
+        <h1 class="recent-Articles">Active User's</h1>
+
+    </div>
+
+    <table class="table ">
+        <thead class="table-primary">
+            <tr>
+                <th class="col">Username</th>
+                <th class="col">Password</th>
+                <th class="col">Contact</th>
+                <th class="col">Email</th>
+                <th class="col">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <th scope="row">@item.u_username</th>
+                    <td>@item.u_password</td>
+                    <td>@item.u_contact</td>
+                    <td>@item.u_email</td>
+                    <td><img src="@Url.Content(item.u_image)" style="width:50px;height:50px" /></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <div>
+        <p class="text-center text-success"> Total User @count </p>
+    </div>
+
+</div>
+

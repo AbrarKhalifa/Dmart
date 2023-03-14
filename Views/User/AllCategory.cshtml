@@ -1,0 +1,61 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Dmart.Models.tbl_categories>
+
+
+@{
+    ViewBag.Title = "AllCategory";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<link href="~/Content/cssAdmin/pagination.css" rel="stylesheet" />
+
+
+@{
+    int count = 0;
+
+}
+<div class="row m-2">
+    <div class="col-md-6 col-lg-6">
+        @using (Html.BeginForm("AllCategory", "User", FormMethod.Post))
+        {
+            <div class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        }
+    </div>
+    <div class="col-md-3 col-lg-3"></div>
+
+</div>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        count++;
+        <div class="col-md-3 col-lg-3">
+            <div class="card m-2">
+                <img src="@Url.Content(item.cat_image)" alt="Avatar" style="width:100%" ; height="200px" />
+                <div class="container p-3">
+                    <li class="nav-item nav-link">
+                        <h4 style="padding:10px 0 10px 0 "><b>@Html.ActionLink(item.cat_name, "viewProduct", new { id = item.cat_id }, new { @class = "nav-brand text-dark text-decoration-none" })</b></h4>
+                    </li>
+                 
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<div id="container" style="margin-left:20px; margin-top:30px">
+    <p></p>
+    <p style="text-align:right" class="text-success m-2"><b>@count Categories Found</b></p>
+    <p></p>
+
+    <div class="pagination" style="margin-left:400px; margin-top:100px">
+        Page @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        Of @Model.PageCount
+    </div>
+    @Html.PagedListPager(Model, page => Url.Action("AllCategory", new { page }))
+</div>

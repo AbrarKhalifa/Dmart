@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <link href="~/Content/cssAdmin/style.css" rel="stylesheet" />
+    <link href="~/Content/cssAdmin/responsive.css" rel="stylesheet" />
+</head>
+<body class="m-0 p-0">
+
+    <header>
+
+        <div class="logosec">
+
+            <div class="logo">@Session["ad_username"].ToString()</div>
+
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182541/Untitled-design-(30).png"
+                 class="icn menuicn"
+                 id="menuicn"
+                 alt="menu-icon">
+        </div>
+
+        <div class="col-md-2 col-lg-2 btn btn-outline-success">
+            <li class="nav-item nav-link">
+                <a href="/Admin/AddCategory" class="navbar-brand"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</a>
+            </li>
+
+        </div>
+
+        <div class="message">
+            <div class="circle"></div>
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png"
+                 class="icn"
+                 alt="dp">
+
+            <div class="dp">
+                <img src="@Url.Content(Session["ad_image"].ToString())"
+                     class="dpicn"
+                     alt="dp">
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option option1">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
+                             class="nav-img"
+                             alt="dashboard">
+                        <li class="nav-item nav-link">
+                            <h5> @Html.ActionLink("Category", "AllCategory", "Admin", new { @class = "navbar-brand text-white" })</h5>
+                        </li>
+                    </div>
+
+
+                    <div class="nav-option option3">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
+                             class="nav-img"
+                             alt="report">
+                        <li class="nav-item nav-link">
+                            <h5> @Html.ActionLink("Products", "viewAllProducts", "Admin", new { @class = "navbar-brand text-dark" })</h5>
+
+                        </li>
+                    </div>
+
+                    <div class="nav-option option4">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png"
+                             class="nav-img"
+                             alt="institution">
+                        <li class="nav-item nav-link">
+                            <h5> @Html.ActionLink("Users", "ViewAllUsers", "Admin", new { @class = "navbar-brand text-dark" })</h5>
+                        </li>
+                    </div>
+
+                    <div class="nav-option option5">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/4.png"
+                             class="nav-img"
+                             alt="blog">
+                        <li class="nav-item nav-link">
+                            <h5> @Html.ActionLink("Profile", "profile", "Admin", new { @class = "navbar-brand text-dark" })</h5>
+
+                        </li>
+                    </div>
+
+                    <div class="nav-option option6">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png"
+                             class="nav-img"
+                             alt="settings">
+                        <li class="nav-item nav-link">
+                            <h5> @Html.ActionLink("Order", "OrderAdmin", "Admin", new { @class = "navbar-brand text-dark" })</h5>
+
+                        </li>
+                    </div>
+
+                    <div class="nav-option logout">
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
+                             class="nav-img"
+                             alt="logout">
+                        <li class="nav-item nav-link">
+                            <h5> @Html.ActionLink("Sign out", "signout", "Admin", new { @class = "navbar-brand text-dark" })</h5>
+                        </li>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+        <div class="main">
+
+            <div class="searchbar2">
+                <input type="text"
+                       name=""
+                       id=""
+                       placeholder="Search">
+                <div class="searchbtn">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
+                         class="icn srchicn"
+                         alt="search-button">
+                </div>
+            </div>
+
+            <div>
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+
+
+    <script src="~/Content/js/jsAdmin/index.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

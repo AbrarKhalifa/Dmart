@@ -1,0 +1,86 @@
+﻿@model Dmart.Models.tbl_product
+@{
+    ViewBag.Title = "addProduct";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+
+
+}
+
+<link href="~/Content/css/addProductForm.css" rel="stylesheet" />
+
+
+<div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+    <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+        <h4 class="text-danger">
+            @ViewBag.error
+        </h4>
+        <h4 class="text-success">
+            @ViewBag.success
+        </h4>
+
+        <div class="formbg-outer">
+            <div class="formbg">
+                <div class="formbg-inner padding-horizontal--48">
+
+                    @using (Html.BeginForm("addProduct", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <span class="padding-bottom--15 m-5 p-4">Adding new product</span>
+
+                        <div class="field padding-bottom--24">
+                            <div class="grid--50-50">
+                                <label for="category">Select Category Name</label>
+                            </div>
+                            @Html.DropDownListFor(x => x.pro_user_id_fk, ViewBag.listCategory as SelectList, "-- Select Category --", new { @class = "form-control" })
+                        </div>
+
+                        <div class="field padding-bottom--24">
+                            <label for="email">Product Image</label>
+                            <input type="file" class="imgfile" id="imgfile" name="imgfile" placeholder="Image Upload">
+
+
+                        </div>
+                        <div class="field padding-bottom--24">
+                            <div class="grid--50-50">
+                                <label for="password">Product Name</label>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.pro_name, new { @class = "form-control" })
+
+                        </div>
+                        <div class="field padding-bottom--24">
+                            <div class="grid--50-50">
+                                <label for="password">Description</label>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.pro_description, new { @class = "form-control" })
+
+                        </div>
+                        <div class="field padding-bottom--24">
+                            <div class="grid--50-50">
+                                <label for="password">Price</label>
+
+                            </div>
+                            @Html.TextBoxFor(x => x.pro_price, new { @class = "form-control" })
+
+                        </div>
+                        <div class="field padding-bottom--24">
+                            <input type="submit" name="submit" value="ADD">
+                        </div>
+                    }
+                    <div class="field">
+
+                        <li class="nav-item nav-link">
+
+                            <a href="/User/AllCategory" class="navbar-brand ssolink">Back to panel</a>
+                        </li>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
